@@ -1,0 +1,136 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Understanding React Router and Page Navigation</p>
+<p class="NormalParagraph">In modern web applications, especially those built with React,
+    navigation between different pages and components is crucial for creating a seamless user
+    experience. One powerful tool for managing this navigation is React Router. This library
+    helps developers define how users can navigate through the app, making it easy to connect
+    different parts of the application.</p>
+<p class="NormalParagraph">To begin, we can set up routing by using the createBrowserRouter
+    function from React Router. This function is usually imported in a file named routes.jsx.
+    Here’s an example of how you can set it up:</p>
+<pre class="NormalCodings">
+import { createBrowserRouter } from 'react-router-dom';
+const Router = createBrowserRouter([
+    { path: "/products", element: &lt;ProductsPage /> } ]);
+export default Router;
+</pre>
+<p class="NormalParagraph">In this code, we create a router that listens for the /products path.
+    When users navigate to this URL, the ProductsPage component will be displayed. Once we have
+    defined our router, we need to provide it to our application. This is done in the main
+    application file, often named app.jsx. Here, we can use the RouterProvider component to make
+    our router available to the rest of the app:</p>
+<pre class="NormalCodings">
+import { RouterProvider } from "react-router-dom";
+import Router from './routes';
+function App() {
+    return &lt;RouterProvider router={Router} />; }
+export default App;
+</pre>
+<p class="NormalParagraph">With this setup, the RouterProvider acts as the parent element, and
+    all components nested within it can utilize the routing functionality provided by React Router.</p>
+<p class="NormalHeading1">Linking Between Pages</p>
+<p class="NormalParagraph">To enable users to navigate between different pages of the application,
+    we can use the Link component from React Router. This component allows us to create links that
+    change the URL without reloading the entire page. Here's an example of how to implement this in
+    the ProductsPage component:</p>
+<pre class="NormalCodings">
+import { Link } from "react-router-dom";
+export default function ProductsPage() {
+    return ( &lt;div> &lt;Link to="/products">Go to Products&lt;/Link>
+            Products Page &lt;/div> ); }
+</pre>
+<p class="NormalParagraph">In this example, clicking on the link will take users to the /products
+    page. It’s important to note that you can also use traditional methods such as window.open or
+    window.location.replace for navigation, but using Link is generally preferred in React
+    applications for a smoother experience.</p>
+<p class="NormalHeading1">Creating Layouts to Avoid Repetition</p>
+<p class="NormalParagraph">When building applications, you may notice that certain components, like
+    headers or sidebars, need to appear on multiple pages. To avoid duplicating code, we can
+    introduce a layout component. This layout component can wrap around the individual routes,
+    ensuring that common elements are displayed without having to call them in every route.</p>
+<p class="NormalParagraph">Let’s say we want to enhance our routing to accept dynamic parameters.
+    For instance, we might want to display products based on a specific identifier called a "slug".
+    Here’s how we can modify our routing:</p>
+<pre class="NormalCodings">
+import { createBrowserRouter } from 'react-router-dom';
+const Router = createBrowserRouter([
+    { path: "/products/:slug", element: &lt;ProductsPage /> }
+]);
+export default Router;
+</pre>
+<p class="NormalParagraph">In this updated code, the :slug part of the path allows the router to
+    accept any value in that position. This is useful for displaying different products based on
+    their unique identifiers.</p>
+<p class="NormalHeading1">Accessing Dynamic Parameters</p>
+<p class="NormalParagraph">Inside the ProductsPage, we can access the slug value using the
+    useParams hook from React Router. This allows us to fetch and display the specific product
+    details dynamically. Here’s how that looks:</p>
+<pre class="NormalCodings">
+import { useParams } from "react-router-dom";
+export default function ProductsPage() {
+    const params = useParams(); // This retrieves the slug from the URL
+    console.log(params); // Outputs the slug to the console
+    return &lt;div>Products Page&lt;/div>;
+}
+</pre>
+<p class="NormalParagraph">This method is helpful when you want to change the content displayed
+    based on the URL. For example, if the URL is /products/laptop, the params object will contain {
+    slug: "laptop" }.</p>
+<p class="NormalHeading1">Adding Child Routes</p>
+<p class="NormalParagraph">To create a more organized structure, you might want to add child
+    routes. For instance, if you have different categories or items within the products, you can
+    nest routes. Here’s how you can do this:</p>
+<pre class="NormalCodings">
+import { createBrowserRouter } from 'react-router-dom';
+const Router = createBrowserRouter([
+    {   path: "/products",
+        element: &lt;ProductsPage />,
+        children: [ { path: "content1", element: &lt;div>Content1&lt;/div> } ] }
+]);
+export default Router;
+</pre>
+<p class="NormalParagraph">In this example, we have a child route called content1 nested under
+    /products. To display this content, we can use the Outlet component in the ProductsPage:</p>
+<pre class="NormalCodings">
+import { Outlet } from "react-router-dom";
+export default function ProductsPage() {
+    return ( &lt;div> Products Page &lt;Outlet /> {/* Renders child routes here */} &lt;/div> ); }
+</pre>
+<p class="NormalParagraph">The Outlet serves as a placeholder for rendering the child components
+    based on the current route.</p>
+<p class="NormalHeading1">Setting Up a Mock Server</p>
+<p class="NormalParagraph">For development purposes, you may want to set up a simple server that
+    can serve mock data, like product information. One way to achieve this is by using JSON Server,
+    which is an easy-to-use tool for creating a mock REST API. You can install it and run it with
+    the following commands:</p>
+<p class="NormalParagraph">
+npm install json-server<br/>
+npm run json-server --watch database.json --delay=1000</p>
+<p class="NormalParagraph">This command starts a server that watches a database.json file, allowing
+    you to test API calls without a backend.</p>
+<p class="NormalHeading1">Adding Bootstrap for Styling</p>
+<p class="NormalParagraph">Finally, to improve the visual appearance of your application, you can
+    incorporate Bootstrap, a popular front-end framework. To add Bootstrap to your React project,
+    you can run:</p>
+<p class="NormalParagraph">npm install react-bootstrap bootstrap</p>
+<p class="NormalParagraph">After this, you can utilize Bootstrap components in your React
+    application, making it more attractive and responsive. In summary, understanding how to use React Router for navigation,
+    implement dynamic routes, and utilize child components are essential skills for any aspiring web
+    developer. By creating layouts to avoid repetition and integrating tools like JSON Server and
+    Bootstrap, you can build robust and visually appealing web applications. With these foundational
+    concepts, young learners can confidently explore the exciting world of web development.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

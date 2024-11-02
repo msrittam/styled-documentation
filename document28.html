@@ -1,0 +1,91 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Java with DB2 connection and the query executions</p>
+<p class="NormalParagraph">In this document, we will explore a segment of Java code that connects to a DB2 database, manages
+user credentials, and executes a deletion operation on a login page table. The code demonstrates how
+to retrieve user input, establish a database connection, and perform a crucial data deletion task
+based on that input. Let’s delve into the details, breaking down each component to ensure clarity
+    and understanding for a young audience.</p>
+<p class="NormalParagraph">The first part of the code captures user input for a username and a password, which are stored in
+two string variables, username and pass. The username is retrieved from a text field, tf1, using the
+method getText(). This process is vital for any application that requires user authentication, as it
+    allows users to specify their credentials before accessing sensitive data.</p>
+<p class="NormalParagraph">Next, the code attempts to load the DB2 driver, which is necessary for establishing a connection
+    with the DB2 database. This is accomplished with the following lines:</p>
+<pre class="NormalCodings">
+try { Class.forName("com.ibm.db2.jcc.DB2Driver"); }
+catch (ClassNotFoundException e2) {
+    System.out.println("Please include Classpath Where your DB2 Driver is located");
+    e2.printStackTrace();
+    return;
+}
+</pre>
+<p class="NormalParagraph">In this section, the Class.forName() method is called with the argument "com.ibm.db2.jcc.DB2Driver".
+If the driver is not found, a ClassNotFoundException will be thrown, which is handled by printing an
+error message that instructs the user to include the correct classpath where the DB2 driver is
+located. This error handling ensures that the application does not crash unexpectedly, and provides
+    helpful feedback to the developer or user regarding the issue.</p>
+<p class="NormalParagraph">Following the successful loading of the driver, the code establishes a connection to the database
+    using the following block:</p>
+<pre class="NormalCodings">
+String url = "jdbc:db2://localhost:50000/user";
+Connection con = (Connection) DriverManager.getConnection(url, "db2admin", "asdfghjkl");
+</pre>
+<p class="NormalParagraph">Here, a connection URL is created that specifies the database location (localhost), the port number
+(50000), and the database name (user). The DriverManager.getConnection() method is then called with
+this URL, along with the username (db2admin) and password (asdfghjkl). If the connection is
+successful, a message is printed to the console stating, "DB2 Database Connected." This confirms to
+    the developer that they can now interact with the database.</p>
+<p class="NormalParagraph">However, if the connection fails, the program outputs, "Db2 connection Failed," which serves as an
+alert for troubleshooting. It’s essential to ensure that the database server is running and
+    accessible before attempting to connect.</p>
+<p class="NormalParagraph">Once connected, the code prepares to delete a record from the login page using a SQL DELETE
+    statement. This is where the program takes action based on the user's input:</p>
+<pre class="NormalCodings">
+PreparedStatement ps = con.prepareStatement("Delete from loginpage WHERE username =(?)");
+ps.setString(1, username);
+ps.executeUpdate();
+</pre>
+<p class="NormalParagraph">In this snippet, a PreparedStatement object is created to execute a SQL command that deletes a
+record from the loginpage table where the username matches the value entered by the user. The
+setString() method is employed to safely insert the user's username into the query, preventing SQL
+injection vulnerabilities—a critical aspect of database security. The method executeUpdate() is then
+    called to execute the deletion operation.</p>
+<p class="NormalParagraph">Upon successfully completing the deletion, a message dialog appears to notify the user:</p>
+<pre class="NormalCodings">
+JOptionPane.showMessageDialog(null, "Completed Successfully! Data Passed");
+</pre>
+<p class="NormalParagraph">This dialog serves as user feedback, confirming that the intended action has been carried out
+successfully. It’s a simple yet effective way to communicate with users, ensuring they are aware of
+    the outcome of their actions.</p>
+<p class="NormalParagraph">In the event of any errors during the database operations, the code includes a catch block:</p>
+<pre class="NormalCodings">
+catch(Exception e1) { e1.printStackTrace(); }
+</pre>
+<p class="NormalParagraph">This block will catch any exceptions that may occur and print the stack trace to the console. It’s a
+useful debugging tool, allowing developers to see what went wrong during execution and helping them
+    to fix issues as they arise.</p>
+<p class="NormalParagraph">In summary, this Java code snippet exemplifies how to manage user data in a secure manner by
+connecting to a DB2 database, performing a delete operation based on user input, and providing
+informative feedback to the user. By clearly explaining each section, we aim to enhance
+understanding for anyone studying computer science or software engineering. This foundational
+knowledge of database management and Java programming can serve as a stepping stone for more complex
+    projects in the future.</p>
+<p class="NormalParagraph">As technology continues to evolve, learning how to interact with databases securely and efficiently
+remains a critical skill for aspiring programmers and engineers. Whether you're building
+applications for business, education, or personal projects, mastering these concepts will empower
+    you to create robust and user-friendly software solutions.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

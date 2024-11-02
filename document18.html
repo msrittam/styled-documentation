@@ -1,0 +1,77 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Comprehensive Guide to Software Project Management and React Frontend Development</p>
+<p class="NormalParagraph">In the field of software project management, effective collaboration and organization are key
+components. One of the fundamental platforms used for version control and collaboration in software
+development is GitHub. To start, you will need to create a GitHub account, which will serve as your
+central hub for managing your code and collaborating with others. After creating your account, you
+should download Git, a version control system that allows you to track changes in your code, and
+Visual Studio Code (VS Code), a popular code editor that will help you write and manage your code
+    more efficiently.</p>
+<p class="NormalParagraph">To access your GitHub repositories, you will also need a Public Access Token. This token can be
+generated through the advanced settings within your GitHub account settings. The token will allow
+you to interact securely with your repositories without needing to repeatedly enter your username
+    and password.</p>
+<p class="NormalParagraph">Once your environment is set up, you can initialize your React frontend project. Start by creating a
+new GitHub repository specifically for your project. Afterward, you will clone this repository into
+your VS Code environment. When cloning, you will be prompted to enter your Public Access Token to
+authenticate the process. It's important to avoid coding directly in the default "dev" branch.
+Instead, create a new branch for your development work. A suggested naming convention could be
+something like dev/srittam/partBranch, which incorporates your name and the purpose of the branch
+    for better organization.</p>
+<p class="NormalParagraph">Maintaining a standardized naming and folder structure throughout your project is crucial for
+clarity and maintainability. Tools like LucidChart can be utilized to create a High-Level Design
+(HLD) diagram, helping to visualize the architecture of your application. For the user interface
+    design, Figma is an excellent choice for wireframing and prototyping.</p>
+<p class="NormalParagraph">Communication with clients is also an essential aspect of project management. During discussions
+with clients, it is helpful to extract all the listed SVG icons using Adobe Illustrator. This step
+    ensures that your icons are properly designed and aligned with the project’s branding.</p>
+<p class="NormalParagraph">When it comes to organizing your code, thoughtful naming conventions for folders and variables can
+significantly enhance readability. For example, for your school-related project, you might name your
+folder mySchool. Class files can be stored under the MyClass directory, while constants and
+    environment constants should be prefixed with REACT_APP_, such as REACT_APP_CONAME.</p>
+<p class="NormalParagraph">To manage environment variables effectively, create .env files for local development and ensure
+these files are included in your .gitignore file to prevent sensitive information from being pushed
+to your public repository. Checking your application's environment can be done using the NODE_ENV
+    variable, which helps differentiate between production and development settings.</p>
+<p class="NormalParagraph">In terms of CSS management, it's important to address unwanted styling issues early. For instance,
+if you notice excess flex divs, consider removing them and setting heights to auto instead of a
+fixed 100%. Establish a common CSS structure with a hierarchical approach, keeping global styles
+within the main application file. Your global CSS file might include styles for body elements,
+headings, links, inputs, and buttons, ensuring that you set a consistent design across your
+    application. You could start your CSS file with:</p>
+<p class="NormalParagraph">css * { margin: 0; padding: 0; }</p>
+<p class="NormalParagraph">Responsive design is also a key consideration. Using media queries (MQuery) allows your application
+    to adapt to different screen sizes, providing a better user experience across devices.</p>
+<p class="NormalParagraph">Upon completing your development work, it’s essential to document your functions and imports with
+comments for clarity. Additionally, your project should include a README file, which can contain
+    visual aids like Loom videos or images to explain the project’s functionality and features.</p>
+<p class="NormalParagraph">To manage dependencies in your project, use the command npm freeze to capture the current state of
+your packages in a requirements file. Once your project is ready, you will need to compare and
+create a pull request for your changes. Designate yourself as the assignee and select a manager to
+    act as the qualifier for code review.</p>
+<p class="NormalParagraph">When writing your README, include detailed descriptions of your project features, as well as any
+pertinent instructions. After obtaining the necessary approvals, you can proceed to merge your
+    changes.</p>
+<p class="NormalParagraph">Additionally, as you develop your application, consider creating distinct folders for assets, hooks,
+contexts, screens, and services. Within the Screens directory, you could structure it further to
+include authentication screens and a home screen. This level of organization will greatly assist in
+    maintaining clarity as the project scales.</p>
+<p class="NormalParagraph">In conclusion, successful software project management, especially in a React environment, requires
+careful planning, organization, and communication. By following the guidelines outlined above, you
+can create a structured approach to your software development projects, ensuring that they are
+    manageable, efficient, and ready for collaboration.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

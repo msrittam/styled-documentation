@@ -1,0 +1,184 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Managing State in React with Redux</p>
+<p class="NormalParagraph">In React applications, it can be challenging for sibling components to
+    communicate directly. Sibling components cannot pass information to one another, and during
+    navigation, they also cannot link directly for routing purposes. For navigation, developers
+    often resort to methods like window.open and window.location.replace. However, these methods are
+    not ideal for managing shared state between sibling components.</p>
+<p class="NormalParagraph">To manage information passing between sibling components effectively, we
+    can utilize React's built-in context feature. However, the context method does not provide a
+    structured way with getter and setter methods. Instead, a more robust solution is to use Redux
+    for global state management. Redux is a separate library that we can install to handle the
+    application's state more effectively.</p>
+<p class="NormalHeading1">Setting Up Redux</p>
+<p class="NormalParagraph">The Redux store acts as a centralized storage for state in a React
+    application. It is bundled with the React application, but it operates independently because it
+    is a different library. Inside the Redux store, we create "slices," which are sections of state
+    management that can be accessed and manipulated by various sibling components. For example, we
+    might define an action type such as change filter and a payload like price: 10 rupees. To
+    install Redux, we first run the following commands in our terminal:</p>
+<p class="NormalParagraph">
+npm install @reduxjs/toolkit<br/>
+npm install react-redux</p>
+<p class="NormalParagraph">After installing Redux, we need to connect the Redux store to our React
+    application. We do this in the main application file, typically named app.jsx. Here’s how you
+    can set up the connection:</p>
+<pre class="NormalCodings">
+import { Provider as ReduxProvider } from "react-redux"; // Renaming the provider to avoid conflicts
+import store from "./store"; // Importing the store
+function Application() {
+    return (
+        &lt;ReduxProvider store={store}>
+            &lt;RouterProvider />
+        &lt;/ReduxProvider>
+    );
+}
+export default Application;
+</pre>
+<p class="NormalParagraph">In this code, we wrap our application with the ReduxProvider, allowing
+    all components to access the Redux store.</p>
+<p class="NormalHeading1">Creating the Redux Store</p>
+<p class="NormalParagraph">Next, we need to define the Redux store itself. This is typically done in
+    a file like src/store/index.js. Here, we import the necessary function to configure our store:</p>
+<pre class="NormalCodings">
+import { configureStore } from "@reduxjs/toolkit";
+// Creating the Redux store
+const store = configureStore({});
+export default store;
+</pre>
+<p class="NormalParagraph">However, this code will produce an error because we need to specify a
+    reducer, which is a function that defines how the state is modified based on actions.</p>
+<p class="NormalHeading1">Defining Slices</p>
+<p class="NormalParagraph">A slice in Redux consists of three main properties: the initial state,
+    the slice name, and the reducers, which contain the business logic. Let’s create a slice for
+    managing flight data. We would typically do this in a file like src/store/slices/flights.js:</p>
+<pre class="NormalCodings">
+import { createSlice } from "@reduxjs/toolkit";
+const FlightsSlice = createSlice({
+    initialState: { flights: [] }, // Initial state with an empty array
+    name: "flights", // Name of the slice
+    reducers: {
+        getFlights: (state, action) => {
+            // Setting flight data when the action is dispatched
+            state.flights = [{ id: "1", route: "del>blr", price: 10000 }]; } }
+});
+// Destructuring the actions and reducer from the slice
+const { actions, reducer } = FlightsSlice;
+const { getFlights } = actions;
+export { reducer, getFlights }; // Exporting the reducer and action
+</pre>
+<p class="NormalParagraph">This slice allows us to store flight data. The getFlights reducer sets
+    the flight information in the state when called.</p>
+<p class="NormalHeading1">Connecting the Reducer</p>
+<p class="NormalParagraph">Now that we have created the slice, we need to connect the reducer to
+    the store. We can do this in the src/store/index.js file:</p>
+<pre class="NormalCodings">
+import { configureStore } from "@reduxjs/toolkit";
+import { reducer } from "./slices/flights"; // Importing the flights reducer
+const store = configureStore({ reducer: reducer }); // Adding the reducer to the store
+export default store;
+</pre>
+<p class="NormalHeading1">Accessing Redux State in Components</p>
+<p class="NormalParagraph">To retrieve and manipulate the flight data in our components, we need to
+    use the useDispatch and useSelector hooks from react-redux. These hooks allow us to interact
+    with the Redux store easily. Here’s an example of how to set up a component that lists flights:</p>
+<pre class="NormalCodings">
+import { useDispatch, useSelector } from "react-redux";
+import { getFlights } from "/store/slices/flights"; // Importing the action
+export default function FlightListing() {
+    const dispatch = useDispatch(); // Get the dispatch function to call actions
+    const listing = useSelector((state) => state.flights); // Get flight data from the store
+    console.log(listing); // Log the current flight listing
+    useEffect(() => {
+        dispatch(getFlights()); // Dispatch the action to get flights when component mounts
+    }, []);
+    return &lt;div>Flight Listing&lt;/div>; // Render flight listing
+}
+</pre>
+<p class="NormalParagraph">In this component, we retrieve the flight data from the Redux store and
+    dispatch the getFlights action to load the initial flight information when the component
+    mounts.</p>
+<p class="NormalHeading1">Combining Multiple Reducers</p>
+<p class="NormalParagraph">When your application grows, you may want to add multiple reducers. It’s
+    important to note that you cannot handle asynchronous actions directly within reducers or
+    manipulate sibling slices inside any slices. To combine multiple reducers, you can use
+    combineReducers from Redux Toolkit. Here’s how to set it up:</p>
+<pre class="NormalCodings">
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { reducer as flightReducers } from "/slices/flights"; // Existing flights reducer
+import { reducer as userReducers } from "/slices/user"; // New user slice
+const store = configureStore({
+    reducer: combineReducers({
+        flights: flightReducers, // Combining flight reducers
+        user: userReducers // Adding user reducers
+    })
+});
+export default store;
+</pre>
+<p class="NormalHeading1">Making API Calls in Slices</p>
+<p class="NormalParagraph">To fetch data from an API, we can use createAsyncThunk. This function
+    allows us to define asynchronous actions. Here’s how to implement fetching flights from an API
+    in our slice:</p>
+<pre class="NormalCodings">
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// Creating an async thunk to fetch flights
+const fetchFlights = createAsyncThunk("flights/fetchFlights", async () => {
+    try { const response = await fetch("http://localhost:3000/flights");
+        const json = await response.json();
+        return json; // Return the fetched data
+    } catch (error) { return []; // Return an empty array in case of an error
+    } });
+// Define the flights slice
+const FlightsSlice = createSlice({
+    initialState: { rawFlights: [], flights: [] }, // Initial state with two arrays
+    name: "flights",
+    reducers: {
+        getFlights: (state, action) => {
+            state.flights = state.rawFlights; // Set flights from raw data
+        } },
+    extraReducers: (builder) => {
+        // Handle different states of the async action
+        builder.addCase(fetchFlights.pending, (state) => {
+            state.loading = true; // Set loading state
+        });
+        builder.addCase(fetchFlights.fulfilled, (state, action) => {
+            state.flights = action.payload; // Set flights from API response
+            state.rawFlights = action.payload; // Store raw data
+            state.loading = false; // Reset loading state
+        });
+        builder.addCase(fetchFlights.rejected, (state, action) => {
+            state.flights = []; // Reset flights on error
+            state.rawFlights = action.payload; // Optionally store the payload
+            state.loading = false; // Reset loading state
+        }); }
+});
+// Destructuring the actions and reducer
+const { actions, reducer } = FlightsSlice;
+const { getFlights } = actions;
+// Exporting the reducer and actions
+export { reducer, getFlights, fetchFlights };
+</pre>
+<p class="NormalParagraph">In this example, we defined an asynchronous thunk called fetchFlights to
+    fetch flight data from an API. The extraReducers section allows us to handle different states of
+    the asynchronous call—pending, fulfilled, and rejected. By using Redux, we can effectively
+    manage state in React applications, allowing sibling components to share information seamlessly.
+    Redux slices enable us to organize our state management into manageable pieces, while
+    asynchronous actions allow for data fetching from external APIs. This structured approach to
+    state management not only enhances the organization of our code but also improves the
+    scalability of our applications. With these tools, young developers can confidently tackle
+    complex state management challenges in their React projects.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

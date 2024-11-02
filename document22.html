@@ -1,0 +1,89 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Understanding Blockchain Technology: Types and Processes</p>
+<p class="NormalParagraph">Blockchain technology has revolutionized how we handle data and transactions. It allows secure,
+transparent, and decentralized management of information. In this overview, we will explore the
+different types of blockchains, consensus protocols, Merkle trees, and the lifecycle of transactions
+within a Hyperledger framework. This information is essential for anyone looking to understand how
+    blockchain works in various contexts.</p>
+<p class="NormalHeading1">Types of Blockchain</p>
+<p class="NormalParagraph">There are several types of blockchains, each serving different purposes and designed for
+    specific use cases.</p>
+<p class="NormalParagraph">Public Blockchains allow anyone to join the network without any permission. This openness
+    encourages a decentralized environment where participation is voluntary. Anyone can contribute
+    to the blockchain, and transactions are verified by a network of nodes. A well-known example of
+    a public blockchain is Bitcoin.</p>
+<p class="NormalParagraph">In contrast, Private Blockchains are controlled by a single organization, such as a company or
+    institution. For instance, SRM could operate a private blockchain where access is restricted to
+    authorized personnel only. These blockchains focus on privacy, making them suitable for
+    sensitive data. They are often faster and easier to maintain due to their centralized nature.
+    However, they come with trust issues since one organization controls everything, which can lead
+    to a lack of decentralization. An example of this type is Hyperledger Fabric.</p>
+<p class="NormalParagraph">Permissioned Blockchains are a subset of private blockchains. They have a governing structure
+    where different members have distinct roles and responsibilities. This type is necessary in
+    networks where privacy and security are paramount. In a permissioned blockchain, a central
+    authority decides who can be a full or half node. A full node can perform transactions and
+    mining, while a half node only handles transactions.</p>
+<p class="NormalParagraph">Consortium Blockchains are also permissioned but are controlled by multiple organizations
+    instead of a single entity. They are semi-decentralized, as they allow a group of organizations,
+    such as the entire SRM group, to manage the blockchain collaboratively. This structure promotes
+    shared governance.</p>
+<p class="NormalParagraph">Hybrid Blockchains combine elements from both public and private blockchains. This flexibility
+    allows businesses to create a private, permission-based system alongside a public,
+    permissionless system. For example, in a hybrid setup, certain data might be made public while
+    other sensitive information remains accessible only to authorized users, similar to how Ripple
+    operates within the banking sector.</p>
+<p class="NormalHeading1">Consensus Protocols</p>
+<p class="NormalParagraph">Consensus protocols are critical for blockchain functionality. They ensure that all nodes in the
+    network agree on the current state of the data. When a new block is added to the blockchain, the
+    consensus protocol guarantees that it represents the true version of events, as recognized by
+    all participants.</p>
+<p class="NormalParagraph">One commonly referenced method is the Longest Chain Rule. In a hypothetical scenario where two
+    miners find a nonce simultaneously, both A and B create blocks. When C adds a new block, all
+    nodes must adopt C's chain because it is longer, which validates A's block as well. This rule
+    ensures consistency and integrity across the network.</p>
+<p class="NormalHeading1">Merkle Trees</p>
+<p class="NormalParagraph">Merkle Trees play a vital role in efficiently verifying large datasets. They are a mathematical
+    data structure composed of hashes of various data blocks, summarizing all transactions in a
+    block. The process can be illustrated mathematically as follows: (Transaction1 + Transaction2 =>
+    Hash12) + (Transaction3 + Transaction4 => Hash34) => Hash1234 + Hash5678 => Hash12345678</p>
+<p class="NormalParagraph">This structure enables quick and secure content verification. Each leaf node is a hash of a
+    transaction, and the root node is a single hash summarizing all transactions. The total number
+    of possible hashes in a Merkle Tree is enormous, approximately ( 10^{77} ).</p>
+<p class="NormalHeading1">Time Stamps</p>
+<p class="NormalParagraph">Time stamps are essential in blockchain technology. They mark the exact time of each
+    transaction, providing proof of when specific actions took place. This feature is crucial for
+    determining when a block was mined and validated by the network. If all nonces fail to achieve
+    the target hash, the time stamp changes, leading to a new target for the next nonce.</p>
+<p class="NormalHeading1">Hyperledger Transaction Lifecycle</p>
+<p class="NormalParagraph">The lifecycle of a transaction within Hyperledger involves several well-defined steps.
+    Initially, the client initiates a transaction and must receive green marks from the Membership
+    Service Provider (MSP) and Access Control List (ACL). Next, endorsing nodes validate the
+    transaction proposal by digitally signing it and sending it back to the client. Once the client
+    receives this verified proposal, they broadcast the transaction to the ordering node, which
+    sequences the transactions according to the timeline.</p>
+<p class="NormalParagraph">The ordering node then creates a block from the inputs received and shares it with all
+    committing and endorsing nodes. Each node reviews the block and gives their approval,
+    effectively committing it to the blockchain. Finally, the endorsing nodes emit notifications to
+    the client about the committed block. To initiate this process, one can start by accessing the
+    IBM blockchain platform, which provides default smart contracts and tools to create new
+    projects.</p>
+<p class="NormalParagraph">In summary, blockchain technology offers a secure and efficient way to handle data transactions
+    across various platforms. Understanding the types of blockchains, their consensus mechanisms,
+    the structure of Merkle trees, and the transaction lifecycle in Hyperledger is crucial for
+    leveraging this innovative technology. With these insights, anyone can appreciate how blockchain
+    can transform industries and improve data management practices.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

@@ -1,0 +1,57 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Understanding HDFS, Zookeeper, and Sqoop in the Hadoop Ecosystem</p>
+<p class="NormalParagraph">In the world of big data, understanding how data is stored and managed is crucial. One important
+system for storing large volumes of data is the Hadoop Distributed File System (HDFS). In HDFS, data
+is stored in blocks. Each single block of data is typically divided into multiple blocks, with a
+default size of 128 MB. However, this size can be manually adjusted based on the requirements of the
+specific application. This block storage allows HDFS to efficiently handle large datasets by
+    distributing them across various nodes in a cluster, ensuring both redundancy and fault tolerance.</p>
+<p class="NormalParagraph">Another essential component in the Hadoop ecosystem is Apache ZooKeeper. It plays a significant role
+in managing distributed applications. The first benefit of using ZooKeeper is its simple distributed
+coordination process. This simplicity is vital for ensuring that all nodes in a cluster can
+effectively communicate and collaborate. Additionally, ZooKeeper provides synchronization among
+server processes. This means that there is mutual exclusion, allowing multiple processes to
+cooperate without interfering with one another. This synchronization is particularly beneficial for
+    applications like Apache HBase, where configuration management is critical.</p>
+<p class="NormalParagraph">ZooKeeper also has a unique way of managing messages. It keeps track of messages using a numbering
+system, which helps maintain order. Each update is stamped, ensuring that all messages are received
+and processed in the correct sequence. This ordered message handling is crucial in distributed
+    systems to prevent conflicts and ensure data integrity.</p>
+<p class="NormalParagraph">Furthermore, ZooKeeper uses a process called serialization. This process encodes the data according
+to specific rules, ensuring that the application runs consistently. In the context of MapReduce,
+serialization is employed to coordinate queues and manage the execution of running threads. This
+    helps in optimizing the performance of distributed computing tasks.</p>
+<p class="NormalParagraph">Speed is another area where ZooKeeper excels. For scenarios where read operations are more common,
+ZooKeeper achieves a remarkable speed ratio of 10:1. This efficiency allows for rapid data access
+and processing, making it a preferred choice for high-demand applications. Additionally, ZooKeeper
+is scalable. By deploying more machines, organizations can enhance the performance of ZooKeeper,
+allowing it to handle larger workloads and more complex applications without compromising speed or
+    efficiency.</p>
+<p class="NormalParagraph">Moving on to another vital tool within the Hadoop ecosystem, we have Sqoop. Sqoop is designed
+specifically to facilitate data transfer between Hadoop and relational database management systems.
+It serves two primary functions: importing data from relational databases, such as MySQL and Oracle,
+into HDFS, and exporting data from HDFS back into these relational databases. This tool is
+particularly useful for organizations that rely on both structured data in relational databases and
+unstructured data in Hadoop. By using Sqoop, companies can streamline the process of moving data
+    between these systems, making it easier to perform analyses and derive insights from their data.</p>
+<p class="NormalParagraph">In summary, HDFS, ZooKeeper, and Sqoop are integral components of the Hadoop ecosystem. HDFS allows
+for efficient storage and management of large datasets through block storage, while ZooKeeper
+enhances the coordination and synchronization of distributed applications. Sqoop bridges the gap
+between relational databases and Hadoop, enabling seamless data transfer. Together, these tools
+empower organizations to effectively harness the power of big data, leading to better
+    decision-making and improved business outcomes.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

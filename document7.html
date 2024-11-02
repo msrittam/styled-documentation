@@ -1,0 +1,73 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Exploring the DB2 Optimizer and Indexing Concepts</p>
+<p class="NormalParagraph">The DB2 Optimizer is a vital component of the DB2 SQL compiler, tasked with selecting the most
+efficient access plan for any given SQL statement. When an SQL statement is compiled, the optimizer
+evaluates various potential execution paths, calculating the estimated costs associated with each.
+It aims to choose the access plan that minimizes these costs, ensuring efficient data retrieval. An
+    access plan outlines the sequence of operations required to fulfill an SQL statement.</p>
+<p class="NormalParagraph">When an application program is bound, a package is created. This package contains access plans for
+all static SQL statements within the application. If the BIND VALIDATE option is used along with the
+RUN option, the system attempts validation at bind time. If any objects do not exist, a warning
+message is generated, but the package is still created. This mechanism ensures that the application
+    can reference the access plans even if certain components are not currently available.</p>
+<p class="NormalParagraph">In the context of data management, indexes play a crucial role, similar to how an index in a book
+helps readers locate information quickly. In DB2, an index consists of two main components: the
+value of interest and a pointer that directs the system to the corresponding row in a table. This
+pointer is known as the Row ID, or RID. The index is organized in either ascending or descending
+order based on one or more columns, which allows for quick retrieval of data. For example, when
+searching for specific information, using an index is far more efficient than scanning through an
+    entire book.</p>
+<p class="NormalParagraph">There are different types of indexes, each serving distinct purposes. Clustered indexes are
+particularly important because they determine the physical order of rows in data pages. When rows in
+a table are stored in the same order as the clustered index, this structure enhances performance,
+especially for queries that require sequential data access. For instance, if you frequently query a
+table for ranges of values, a clustered index can significantly speed up these operations. However,
+it is essential to note that clustered indexes cannot be specified in the CREATE TABLE statement;
+    they are defined separately.</p>
+<p class="NormalParagraph">On the other hand, non-clustered indexes function differently. They store data in one location while
+keeping the index in another. This structure allows a single table to maintain multiple
+non-clustered indexes, with each index pointing to different data locations. Non-clustered indexes
+are particularly useful for improving query performance when the keys used in the queries are not
+primary keys. For instance, a book can have multiple indexes—one at the beginning that outlines the
+    contents by chapter, and another that lists terms in alphabetical order.</p>
+<p class="NormalParagraph">When executing an SQL statement, the DB2 optimizer must determine the best access path, considering
+various factors such as catalog statistics, table size, and existing indexes. The main access paths
+    include relation scans, matching index scans, index-only access, and non-matching index scans.</p>
+<p class="NormalParagraph">A relation scan refers to the process where the entire table is sequentially scanned for qualifying
+    rows. This approach can be straightforward but may not always be the most efficient.</p>
+<p class="NormalParagraph">In contrast, a matching index scan is when DB2 utilizes an existing index to access data
+efficiently. For example, if there is an index on a PHONEBOOK table, DB2 can leverage this index to
+quickly locate the desired records. The matching index scan exploits the tree structure of the
+index, allowing DB2 to begin its search at a specific point rather than scanning the entire index.
+However, for this method to be effective, the leading part of the indexed key must be specified in
+    the SQL query.</p>
+<p class="NormalParagraph">Index-only access is an even more efficient method. In this scenario, all required data can be
+retrieved directly from the index without accessing the underlying data pages. This minimizes the
+number of input/output operations and reduces CPU costs, enhancing overall performance. For DB2 to
+use this access method, all necessary predicates must be evaluated through the index, ensuring that
+    only index columns are selected.</p>
+<p class="NormalParagraph">Lastly, a non-matching index scan occurs when DB2 can use an index but cannot limit its search based
+on the leading column. In such cases, DB2 starts at the beginning of the index and scans through it
+to find the requested data rows. While this method may not be as efficient as a matching index scan,
+it can still be faster than a full relation scan, as accessing the index is generally quicker than
+    scanning the entire table.</p>
+<p class="NormalParagraph">Overall, the DB2 Optimizer and indexing strategies are essential components in managing and
+retrieving data efficiently. By understanding these concepts, users can optimize their database
+queries, ensuring that they retrieve data in the most efficient manner possible. This knowledge is
+crucial for anyone working with databases, as it helps in designing systems that perform well under
+    various conditions and workloads.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

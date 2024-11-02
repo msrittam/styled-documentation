@@ -1,0 +1,104 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Understanding Cryptography: Key Concepts and Algorithms</p>
+<p class="NormalParagraph">Cryptography is a crucial field in computer science and information security, concerned with
+protecting information by transforming it into a secure format. This process ensures that only
+authorized parties can access and understand the data. In this overview, we will explore various
+cryptographic concepts, including block ciphers, symmetric and asymmetric algorithms, key
+    distribution methods, and principles of security.</p>
+<p class="NormalHeading1">Block Ciphers and Symmetric Key Algorithms</p>
+<p class="NormalParagraph">Block ciphers are a type of encryption method that processes data in fixed-size blocks. For
+instance, in a block cipher, the same key is used to create a cipher block, and all blocks must be
+of equal size, typically 64 bits. One of the most well-known symmetric key algorithms is the Data
+Encryption Standard (DES). This algorithm starts with a plaintext of 64 bits in binary format. The
+process begins with an initial permutation, followed by key reduction, which incorporates 8 parity
+bits. The key is further reduced through a series of transformations, and the algorithm goes through
+    a total of 16 rounds.</p>
+<p class="NormalParagraph">During these rounds, various key transformations, such as compression and expansion, occur through
+permutation and substitution methods. After completing the rounds, a final permutation yields the
+ciphertext, which is also 64 bits long. This systematic approach to data transformation is vital for
+    maintaining the confidentiality of the information being encrypted.</p>
+<p class="NormalHeading1">RSA Algorithm: An Asymmetric Approach</p>
+<p class="NormalParagraph">The RSA (Rivest-Shamir-Adleman) algorithm is another fundamental method in cryptography,
+distinguished by its use of public and private keys. For encryption, the algorithm employs a public
+    key represented by the formula: c = (m^e) mod n</p>
+<p class="NormalParagraph">In this formula, ( m ) denotes the plaintext, ( e ) is the public exponent, and ( n ) is
+derived from the product of two prime numbers. For decryption, the private key is utilized as
+    follows: m = (c^d) mod n</p>
+<p class="NormalParagraph">This method ensures that even if the public key is known, only the private key can decrypt the
+    message, thus providing a higher level of security.</p>
+<p class="NormalHeading1">Advanced Encryption Standard (AES)</p>
+<p class="NormalParagraph">The Advanced Encryption Standard (AES) is recognized as one of the most secure symmetric key
+algorithms available today. It operates as a block cipher and adjusts its block size based on the
+number of rounds executed during encryption. The structure of AES is based on a 4x4 array, which
+    undergoes various transformations.</p>
+<p class="NormalParagraph">In AES, the process begins with a pre-round transformation that involves an XOR operation with the
+initial key ( k_0 ). The algorithm proceeds through several rounds, where each round ( n )
+includes specific transformations. For example, 10 rounds yield a 128-bit output, 12 rounds produce
+192 bits, and 14 rounds provide a 256-bit output. Each round consists of the following operations:
+    substituting bytes, shifting rows, mixing columns, and adding round keys.</p>
+<p class="NormalParagraph">During the substitution step, each byte is replaced according to a 16x16 S-box, and the bytes are
+then shifted left based on their row number. The mixing columns step involves a multiplication
+process with a specific constant matrix, and the addition of the round key is accomplished through
+    XOR operations.</p>
+<p class="NormalHeading1">Digital Signatures and Data Integrity</p>
+<p class="NormalParagraph">Digital signatures are an essential aspect of cryptography, utilizing asymmetric encryption to
+ensure data integrity and authentication. This process involves encrypting a message with a private
+key, which is then decrypted with a public key. To validate the integrity of the message, a hash
+algorithm generates a hash value that is attached to the message. If the message changes, the hash
+    value will differ, indicating potential tampering.</p>
+<p class="NormalParagraph">The RSA method incorporates Euler's totient function and Euler's theorem, which provide the
+necessary mathematical foundations for encryption and decryption. These principles ensure that only
+    the intended recipient can access the original message.</p>
+<p class="NormalHeading1">Key Distribution Methods</p>
+<p class="NormalParagraph">Key distribution is vital for maintaining security in cryptographic systems. In symmetric key
+systems, keys can be distributed physically, through a key distribution center, by reusing old keys,
+or via a third party. In contrast, asymmetric key systems utilize public announcements, public key
+    directories, public key authorities, and certificate authorities to manage key distribution.</p>
+<p class="NormalHeading1">Security Protocols: SSL and TLS</p>
+<p class="NormalParagraph">Protocols such as SSL (Secure Socket Layer) and TLS (Transport Layer Security) play a crucial role
+in ensuring confidentiality and integrity between the transport and application layers of networks.
+SSL provides a secure channel over the Internet, while TLS offers privacy and security through
+    pseudo-random algorithms for encryption.</p>
+<p class="NormalParagraph">SHTTP (Secure Hypertext Transfer Protocol) serves as a firewall mechanism in the Internet's
+application layer, and TSP (Tunnel Setup Protocol) explains how secure tunnels are established for
+    data transmission.</p>
+<p class="NormalHeading1">Modes of Operation for Block Ciphers</p>
+<p class="NormalParagraph">Different modes of operation enhance the security of block ciphers. The Electronic Codebook (ECB)
+mode uses block-wise XOR with a key to create ciphertext, but it may produce identical ciphertexts
+for identical plaintexts. The Cipher Block Chaining (CBC) mode initializes with a random number and
+    XORs blocks with previous ciphertexts, enhancing security.</p>
+<p class="NormalParagraph">Cipher Feedback (CFB) mode alters the last ciphertext to introduce changes into subsequent blocks,
+while Output Feedback (OFB) mode adds previous outputs into the next block, reducing error
+propagation risks. Lastly, Counter (CTR) mode enhances high-speed transmission by XORing counters
+    with keys and plaintexts to produce ciphertext.</p>
+<p class="NormalHeading1">Principles of Security</p>
+<p class="NormalParagraph">Four fundamental principles underpin the field of cryptography: confidentiality, authentication,
+integrity, and non-repudiation. Additionally, techniques used in cryptography can be categorized
+    into substitution and transposition methods.</p>
+<p class="NormalParagraph">Substitution methods include the Caesar technique, where letters are shifted a fixed number of
+places, and the modified Caesar technique, which varies shifts. Monoalphabetic ciphers use
+permutations and combinations to obscure plaintext, while homophonic ciphers assign multiple symbols
+    to each letter, known only to the sender and receiver.</p>
+<p class="NormalParagraph">Transposition techniques rearrange letters without altering the content. The rail fence technique
+arranges text in a zigzag pattern, while the simple columnar method writes text in rows and reads it
+    in columns. These techniques can be repeated for added security.</p>
+<p class="NormalParagraph">In summary, cryptography encompasses a wide range of techniques and algorithms essential for
+securing information. Understanding the various block ciphers, key distribution methods, and
+principles of security provides a strong foundation for students and professionals in the field. By
+mastering these concepts, one can appreciate the critical role that cryptography plays in protecting
+    data in our increasingly digital world.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

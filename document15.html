@@ -1,0 +1,63 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Understanding MapReduce and HDFS Architecture</p>
+<p class="NormalParagraph">MapReduce is a powerful programming model designed for processing and generating large datasets.
+    It operates on a parallel and distributed algorithm, typically running on a cluster of
+    computers. The strength of MapReduce lies in its ability to handle big data efficiently. A
+    MapReduce program consists of two main components: the map procedure and the reduce method.</p>
+<p class="NormalParagraph">The map procedure is responsible for filtering and sorting the input data. This step involves
+    breaking down the data into manageable pieces and applying a function to each piece to extract
+    relevant information. For example, in a dataset containing sales information, the map function
+    could be used to filter out entries that do not meet specific criteria, such as sales below a
+    certain amount. After the mapping process, the data is organized and sorted into key-value
+    pairs, making it easier to analyze.</p>
+<p class="NormalParagraph">The reduce method follows the map procedure and focuses on performing a summary operation on the
+    processed data. It takes the output from the map phase, combines the key-value pairs, and
+    processes them to produce a summarized result. For instance, if the map function extracted sales
+    data, the reduce function could sum the total sales for each product, providing a clear overview
+    of performance.</p>
+<p class="NormalParagraph">Another critical component in the big data ecosystem is the Hadoop Distributed File System
+    (HDFS). HDFS is specifically designed for storage in a Hadoop cluster and is optimized for
+    running on commodity hardware. Unlike traditional file systems, HDFS is built around a
+    distributed architecture that prioritizes storing large chunks of data in blocks, rather than
+    managing numerous small data blocks. This design enhances efficiency when working with massive
+    datasets.</p>
+<p class="NormalParagraph">One of the standout features of HDFS is its fault tolerance and high availability. These
+    qualities ensure that data remains accessible even in the event of hardware failures. HDFS
+    automatically replicates data across multiple nodes within the cluster, meaning that if one node
+    goes down, the data can still be retrieved from another node that holds a copy. This redundancy
+    is crucial for maintaining the integrity of the data stored in a Hadoop cluster.</p>
+<p class="NormalParagraph">The architecture of HDFS consists of two primary types of nodes: the NameNode and the DataNode.</p>
+<p class="NormalParagraph">The NameNode acts as the master server in the HDFS architecture. It is responsible for managing
+    the metadata associated with the files stored in the Hadoop cluster. Metadata includes vital
+    information such as the names of files, their sizes, and the locations of the data blocks on the
+    DataNodes. By storing this information, the NameNode enables efficient communication between the
+    various components of the cluster. When a request for data is made, the NameNode can quickly
+    locate the nearest DataNode that holds the required blocks, thus speeding up data retrieval
+    processes.</p>
+<p class="NormalParagraph">On the other hand, DataNodes serve as the slave nodes in the architecture. Their primary role is
+    to store the actual data blocks within the Hadoop cluster. The number of DataNodes can vary
+    widely, typically ranging from a single DataNode to several hundred or even more, depending on
+    the size of the cluster and the volume of data to be managed. More DataNodes allow for greater
+    storage capacity, which is essential for handling large datasets effectively. Each DataNode is
+    designed to accommodate a high storage capacity to ensure it can manage numerous file blocks
+    without compromising performance.</p>
+<p class="NormalParagraph">In summary, MapReduce and HDFS are fundamental components of the Hadoop ecosystem. MapReduce
+    enables the efficient processing of big data through its organized map and reduce phases, while
+    HDFS provides a reliable and scalable storage solution. Understanding these concepts is
+    essential for anyone looking to work with big data technologies, as they form the backbone of
+    many data processing and storage strategies in modern computing environments.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

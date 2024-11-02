@@ -1,0 +1,95 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Creating and Setting Up a Laravel Project</p>
+<p class="NormalParagraph">Laravel is a powerful framework for building web applications using PHP.
+    To begin your journey with Laravel, you will first create a new project. This process is made
+    easy with Composer, a dependency manager for PHP that simplifies the installation and management
+    of libraries. To create a new Laravel project named "social," you can use the following command
+    in your terminal:</p>
+<p class="NormalParagraph">composer create-project laravel/laravel social</p>
+<p class="NormalParagraph">This command instructs Composer to download the Laravel framework and
+    set up a new application in a directory called "social." Once the command completes, you will
+    have a fresh Laravel installation ready for you to customize and build upon.</p>
+<p class="NormalHeading1">Testing Your Laravel Project</p>
+<p class="NormalParagraph">After successfully creating your Laravel project, the next step is to
+    ensure that everything is working correctly. To do this, you need to start the built-in server
+    that Laravel provides. First, navigate into the "social" directory you just created:</p>
+<p class="NormalParagraph">cd social<br/>php artisan serve</p>
+<p class="NormalParagraph">Once inside the project directory, you can start the Laravel development
+    server by running the command. This command will start the server, and you will see a message
+    indicating that it is running. The server typically runs at http://localhost:8000. You can open
+    a web browser and enter this address to access your application. If everything is set up
+    correctly, you will see the default Laravel welcome page, confirming that your project is
+    operational.</p>
+<p class="NormalHeading1">Setting Up Authentication</p>
+<p class="NormalParagraph">Authentication is a critical feature for many web applications, allowing
+    users to register and log in securely. Laravel provides a straightforward way to set up
+    authentication through its built-in tools. To begin, you need to configure your database to
+    store user information. Before you can set up authentication, ensure that the database
+    credentials are configured correctly in the .env file located in the root directory of your
+    Laravel project. This file contains environment variables, including those necessary for
+    connecting to your database. Next, you will create the tables required for user authentication.
+    Laravel uses migrations to handle database schema changes. Migrations allow you to define the
+    structure of your database tables and easily apply changes over time. To create the necessary
+    authentication tables, you will run the following command:</p>
+<p class="NormalParagraph">php artisan migrate</p>
+<p class="NormalParagraph">This command executes all the migration files in the database/migrations
+    directory. It creates tables such as users and password_resets. Within each migration file, you
+    will find two important functions:<br/>
+public function up(): This function is responsible for creating the database tables and defining their columns and data types.<br/>
+public function down(): This function reverses the changes made by the up() function, allowing you to drop tables if needed.</p>
+<p class="NormalParagraph">After running the migrations, the next step is to enable the
+    authentication features provided by Laravel. To do this, you will run the following command:</p>
+<p class="NormalParagraph">php artisan make:auth</p>
+<p class="NormalParagraph">This command generates all the necessary scaffolding for authentication,
+    including routes, controllers, and views. Once this command has been executed, start the server
+    again using:</p>
+<p class="NormalParagraph">php artisan serve</p>
+<p class="NormalParagraph">You can now check the authentication functionality by navigating to the
+    following URL in your browser: http://localhost:8000/register This link directs you to the
+    registration page, where new users can sign up for your application. Similarly, you can access
+    the login page at: http://localhost:8000/login</p>
+<p class="NormalHeading1">Using Blade Templates for Views</p>
+<p class="NormalParagraph">Laravel uses Blade as its templating engine, which allows for dynamic
+    content to be embedded in your views seamlessly. Blade templates enable you to mix PHP code with
+    HTML, making it easier to create complex layouts. You can use Blade to add various services and
+    features to your views, such as displaying user data, form inputs, and more. To see how routing
+    works, you can check the routes/web.php file. This file contains the definitions for the
+    application's routes, which map URLs to specific controller actions, ensuring users can navigate
+    through your application smoothly.</p>
+<p class="NormalHeading1">Creating Models and Controllers</p>
+<p class="NormalParagraph">In Laravel, models represent the data structure and interact with the
+    database. Each model typically corresponds to a table in your database. To create a new model,
+    you should also create a migration file that defines the table structure. For example, if you
+    want to create a model for messages, you can use the following command:</p>
+<p class="NormalParagraph">php artisan make:migration create_messages_table</p>
+<p class="NormalParagraph">This command generates a new migration file in the database/migrations
+    directory, where you will define the structure of the messages table. This table might include
+    fields such as sender_id, receiver_id, content, and timestamps to track when messages are sent
+    and received. After creating the migration, you can check the migrations folder to find the
+    newly created file. Open this file and edit it to specify the columns and their data types that
+    you need for your messages. After defining the migration, run the following command to apply the
+    changes to your database:</p>
+<p class="NormalParagraph">php artisan migrate</p>
+<p class="NormalParagraph">This command will execute the migration and create the messages table in
+    your database, enabling you to store and manage message data effectively. In summary, you have
+    learned how to create a new Laravel project, test it using the built-in server, set up user
+    authentication, and create models and migrations. Laravel's robust features and tools simplify
+    the process of developing web applications, allowing you to focus on building functionality
+    rather than worrying about the underlying infrastructure. As you continue to explore Laravel,
+    you will uncover even more capabilities that can enhance your web projects and streamline your
+    development process. Happy coding!</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

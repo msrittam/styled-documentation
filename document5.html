@@ -1,0 +1,158 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Understanding GSAP Animations and Redux-Saga Integration</p>
+<p class="NormalParagraph">In modern web development, creating engaging user experiences often
+    involves animation. The GreenSock Animation Platform (GSAP) is a powerful library that allows
+    developers to animate elements on a webpage smoothly and efficiently. This document will explore
+    how to use GSAP for animations and how to integrate Redux-Saga for managing side effects in a
+    React application. To begin, let's look at how to use GSAP to animate elements. You can use
+    the gsap.to() method to transition an element from its current state to a specified end state.
+    The basic syntax looks like this:</p>
+
+<pre class="NormalCodings">
+gsap.to("&lt;enter the class name>", {
+  x: 1000,
+  duration: 2,
+  delay: 1,
+  rotate: 360,
+  backgroundColor: "blue",
+  borderRadius: "50%",
+  scale: 0.5,
+  repeat: 10,
+  yoyo: true,
+});
+</pre>
+<p class="NormalParagraph">In this example, the animation moves the element with the specified
+    class name horizontally to the right by 1000 pixels over a duration of 2 seconds, with a delay
+    of 1 second before starting. The rotate property spins the element 360 degrees, while the
+    backgroundColor changes to blue. The borderRadius property makes the element circular, and scale
+    reduces its size to half. The animation repeats ten times due to the repeat property, and the
+    yoyo property allows it to reverse back to the starting state after each complete cycle. Another
+    useful method is gsap.from(), which animates an element from a specified starting state to its
+    final state. For instance, the following code will animate an element from the left off-screen:</p>
+<pre class="NormalCodings">
+gsap.from("&lt;enter the class name>", {
+  transform: "translateX(-150%)",
+  opacity: 0,
+  color: "red",
+  duration: 2,
+  delay: 1,
+  y: 30,
+  stagger: 0.5,
+});
+</pre>>
+<p class="NormalParagraph">In this case, the element starts 150% off-screen to the left, with an
+    initial opacity of 0, making it invisible. As it moves into the viewport, it becomes fully
+    opaque and turns red. The y property offsets the element downwards by 30 pixels. The stagger
+    property allows for animations to occur one after another, creating a wave effect. GSAP provides
+    various properties that enhance animation control. The stagger property can be particularly
+    effective for animating multiple elements individually, while repeat and yoyo offer flexibility
+    in controlling how animations play. For more complex animations, you can utilize
+    gsap.timeline(), which allows for sequencing multiple animations to occur in a specific order.
+    Additionally, the scrollTrigger property can trigger animations based on the scroll position,
+    making your animations more interactive. For example:</p>
+<pre class="NormalCodings">
+gsap.timeline().to("&lt;enter the class name>", {
+  scrollTrigger: "&lt;enter the same class name>",
+  transform: "translateX(-150%)",
+  opacity: 1,
+});
+</pre>
+<p class="NormalParagraph">This setup ensures that the animation waits for the user to scroll before executing.</p>
+<p class="NormalHeading1">Managing Side Effects with Redux-Saga</p>
+<p class="NormalParagraph">As applications grow, managing state and side effects can become
+    increasingly complex. This is where Redux-Saga comes in. It is a middleware library that helps
+    manage side effects in Redux applications, providing a clean way to handle asynchronous actions
+    such as data fetching. To start using Redux-Saga, you first need to install it in your project.
+    Use the following command:</p>
+<p class="NormalParagraph">npm install redux-saga</p>
+<p class="NormalParagraph">Next, you can set up the saga middleware in your application. Create a
+    file named middleware.js in the store/saga directory and add the following code:</p>
+<pre class="NormalCodings">
+import createSagaMiddleware from "redux-saga";
+const sagaMiddleware = createSagaMiddleware();
+export default sagaMiddleware;
+</pre>
+<p class="NormalParagraph">Then, in your store/index.js, import the saga middleware and set up your
+    Redux store. The middleware will intercept dispatched actions and allow your sagas to respond
+    accordingly:</p>
+<pre class="NormalCodings">
+import sagaMiddleware from "./saga/middleware";
+import { rootSaga } from "./saga";
+const store = configureStore({
+  reducer: combineReducers({
+    flights: flightsReducer,
+    user: userReducer,
+  }),
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware); },
+});
+sagaMiddleware.run(rootSaga);
+</pre>
+<p class="NormalParagraph">In this code, we import the necessary reducers for flights and users,
+    combine them into the store, and attach the saga middleware. The run method initializes the
+    sagas defined in the rootSaga. Next, create the index.js file inside the store/saga directory.
+    This file will export the root saga that yields individual sagas for handling specific actions:</p>
+<pre class="NormalCodings">
+import { fetchFlightsSaga, watchFetchData } from "./flights.saga";
+export function* rootSaga() {
+  yield watchFetchData();
+}
+</pre>>
+<p class="NormalParagraph">Now, let’s implement the actual saga that handles data fetching. In
+    store/saga/flights.saga.js, you will create functions that interact with an API to fetch flight
+    data. Here’s how this can be structured:</p>
+<pre class="NormalCodings">
+import { call, takeEvery, put } from "redux-saga/effects";
+import axios from "axios";
+import { fetchFlights } from "../slices/flights";
+function fetchAPIdata() {
+  return axios("fetchUrl").then((response) => response.data);
+}
+export function* fetchFlightsSaga() {
+  try {
+    const data = yield call(fetchAPIdata);
+    yield put(fetchFlightsSuccess(data));
+  } catch (error) {
+    yield put(fetchFlightsFailure());
+  }}
+export function* watchFetchData() {
+  yield takeEvery(fetchFlights.type, fetchFlightsSaga);
+}
+</pre>
+<p class="NormalParagraph">In this code, the fetchAPIdata function makes an API call to fetch data.
+    The fetchFlightsSaga generator function listens for the fetchFlights action, calls fetchAPIdata,
+    and dispatches actions based on whether the request succeeded or failed. Finally, you should
+    remove any existing thunk actions in store/slice/flights.js and replace them with the new saga
+    actions. Update the reducers to handle success and failure cases:</p>
+<pre class="NormalCodings">
+fetchFlights: (state, action) => {},
+fetchFlightsSuccess: (state, action) => {
+  state.flights = action.payload;
+},
+fetchFlightsFailure: (state, action) => {},
+</pre>>
+<p class="NormalParagraph">Ensure you export these new actions so they can be dispatched correctly
+    in your components. Replace instances of getFlights with fetchFlights wherever you need to
+    update the Redux store, allowing for a more consistent flow of data. In summary, this document
+    has covered the essentials of using GSAP for animations in web development and integrating
+    Redux-Saga for managing asynchronous actions in a React application. By understanding these
+    tools, you can create engaging user interfaces and efficiently manage state in your
+    applications. Both GSAP and Redux-Saga provide powerful features that enhance the functionality
+    and interactivity of your projects, making them valuable assets in your development toolkit. As
+    you continue to explore these technologies, you will find even more possibilities for creating
+    dynamic and responsive web applications.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

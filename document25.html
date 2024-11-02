@@ -1,0 +1,159 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Image Feature Extraction and Data Normalization Using Python</p>
+<p class="NormalParagraph">In this document, we will delve into a Python program that focuses on
+    extracting features from images and normalizing the data for further analysis. The program
+    utilizes various libraries, including pickle, gspread, skimage, and numpy. These libraries help
+    in handling image processing, data manipulation, and integration with Google Sheets.</p>
+<p class="NormalHeading1">Introduction to Libraries and Initial Setup</p>
+<p class="NormalParagraph">To begin, we need to import essential libraries that will aid us
+    throughout the process. The libraries imported include pickle for saving our data, gspread for
+    interacting with Google Sheets, and skimage for image processing. Additionally, we utilize numpy
+    for efficient array manipulations. Below is the initial setup:</p>
+<pre class="NormalCodings">
+import pickle
+import gspread
+import skimage
+import numpy as np
+from glob import glob
+from skimage import util
+from skimage.io import imread
+from google.colab import drive
+from skimage.filters import gabor
+from skimage.feature import local_binary_pattern
+from oauth2client.service_account import ServiceAccountCredentials as account
+</pre>
+<p class="NormalParagraph">Before we start processing our images, we mount Google Drive, which
+    allows us to access the dataset stored there. The line drive.mount('/content/drive',
+    force_remount=True) is used for this purpose. Next, we define the scope of access for our Google
+    Drive using the credentials obtained from a JSON key file:</p>
+<pre class="NormalCodings">
+drive.mount('/content/drive', force_remount=True)
+scope = ['https://www.googleapis.com/auth/drive']
+creds = account.from_json_keyfile_name('client_secret0.json', scope)
+client = gspread.authorize(creds)
+sheet = client.open('legislators').sheet1
+</pre>
+<p class="NormalParagraph">In this segment, we establish a connection to the Google Sheets document
+    named "legislators" which will hold class labels for our images.</p>
+<p class="NormalHeading1">Loading Training Data</p>
+<p class="NormalParagraph">We now proceed to load the training dataset, which consists of images.
+    The glob function is used to collect the paths of all images stored in the specified directory:</p>
+<pre class="NormalCodings">
+trainingdata = glob('/content/drive/MyDrive/trainingdataset/*')  # total training data
+</pre>
+<p class="NormalParagraph">Following this, we initialize a NumPy array called trainfeats, which
+    will store the extracted features for each image. The array is set to have dimensions based on
+    the number of images and the features we plan to extract:</p>
+<pre class="NormalCodings">
+trainfeats = np.zeros((len(trainingdata), 9))
+</pre>
+<p class="NormalHeading1">Feature Extraction Process</p>
+<p class="NormalParagraph">We begin the feature extraction process by iterating over each image in
+    the trainingdata. For each image, we read it as a grayscale array using imread. This conversion
+    is essential for further processing:</p>
+<pre class="NormalCodings">
+for tr in range(len(trainingdata)):
+    print(str(tr + 1) + '/' + str(len(trainingdata)))
+    img_arr = np.array(imread(trainingdata[tr], as_gray=True))  # converting to grayscale and array
+</pre>
+<p class="NormalParagraph">We then compute the Local Binary Pattern (LBP) of the image. LBP is a
+    powerful feature descriptor used for texture classification. The following lines of code extract
+    the LBP and calculate its histogram:</p>
+<pre class="NormalCodings">
+feat_lbp = local_binary_pattern(img_arr, 8, 1, 'uniform')  # finding LBP
+lbp_hist, _ = np.histogram(feat_lbp, 8)  # energy and Entropy of LBP feature
+</pre>
+<p class="NormalParagraph">Next, we convert the histogram to a probability distribution and
+    calculate the energy and entropy of the LBP feature:</p>
+<pre class="NormalCodings">
+lbp_hist = np.array(lbp_hist, dtype=float)
+lbp_prob = np.divide(lbp_hist, np.sum(lbp_hist))
+lbp_energy = np.nansum(lbp_prob2)
+lbp_entropy = -np.nansum(np.multiply(lbp_prob, np.log2(lbp_prob)))
+</pre>
+<p class="NormalHeading1">Grey-Level Co-occurrence Matrix (GLCM) Features</p>
+<p class="NormalParagraph">After calculating the LBP features, we proceed to compute features from
+    the Grey-Level Co-occurrence Matrix (GLCM). GLCM is used to assess the spatial relationship
+    between pixels:</p>
+<pre class="NormalCodings">
+gcomat = skimage.feature.greycomatrix(util.img_as_ubyte(img_arr) // 32, [2], [0])  # co-occurrence matrix
+contrast = skimage.feature.greycoprops(gcomat, prop='contrast')
+dissimilarity = skimage.feature.greycoprops(gcomat, prop='dissimilarity')
+homogeneity = skimage.feature.greycoprops(gcomat, prop='homogeneity')
+energy = skimage.feature.greycoprops(gcomat, prop='energy')
+correlation = skimage.feature.greycoprops(gcomat, prop='correlation')
+</pre>
+<p class="NormalParagraph">These features (contrast, dissimilarity, homogeneity, energy, and
+    correlation) describe various aspects of the image texture and are essential for effective
+    classification.</p>
+<p class="NormalHeading1">Gabor Filter Response</p>
+<p class="NormalParagraph">To further enhance our feature set, we apply a Gabor filter to the
+    image, which is particularly effective in capturing spatial frequency information:</p>
+<pre class="NormalCodings">
+gaborfilt_real, gaborfilt_imag = gabor(img_arr, frequency=0.6)  # Gabor filter
+gabor_hist, _ = np.histogram(gaborfilt_real, 8)  # energy and Entropy of Gabor filter response
+</pre>
+<p class="NormalParagraph">We then compute the probability distribution, energy, and entropy of the
+    Gabor filter response similarly to how we did with the LBP:</p>
+<pre class="NormalCodings">
+gabor_hist = np.array(gabor_hist, dtype=float)
+gabor_prob = np.divide(gabor_hist, np.sum(gabor_hist))
+gabor_energy = np.nansum(gabor_prob2)
+gabor_entropy = -np.nansum(np.multiply(gabor_prob, np.log2(gabor_prob)))
+</pre>
+<p class="NormalHeading1">Concatenating Features</p>
+<p class="NormalParagraph">Having extracted multiple feature sets from the images, we concatenate these features into a single
+    feature vector for each image:</p>
+<pre class="NormalCodings">
+feat_glcm1 = np.array([contrast[0][0], dissimilarity[0][0], homogeneity[0][0]])
+feat_glcm2 = np.array([energy[0][0], correlation[0][0]])
+feat_glcm3 = np.array([lbp_energy, lbp_entropy, gabor_energy, gabor_entropy])
+concat_feat = np.concatenate((feat_glcm1, feat_glcm2, feat_glcm3))  # concatenating features (2 + 5 + 2)
+trainfeats[tr, :] = concat_feat  # stacking feature vectors for each image
+</pre>
+<p class="NormalParagraph">Simultaneously, we retrieve the corresponding class label for each image
+    from the Google Sheet:</p>
+<pre class="NormalCodings">
+label.append(sheet.get_all_records()[tr]['statusno'])  # class label
+</pre>
+<p class="NormalHeading1">Normalizing Features</p>
+<p class="NormalParagraph">To ensure that our feature vectors are on a similar scale, we normalize
+    the features using min-max normalization:
+<pre class="NormalCodings">
+trainlabel = np.array(label)
+trmaxs = np.amax(trainfeats, axis=0)  # finding maximum along each column
+trmins = np.amin(trainfeats, axis=0)  # finding minimum along each column
+trmaxs_rep = np.tile(trmaxs, (len(trainingdata), 1))  # repeating the maximum value along the rows
+trmins_rep = np.tile(trmins, (len(trainingdata), 1))  # repeating the minimum value along the rows
+trainfeatsnorm = np.divide(trainfeats - trmins_rep, trmaxs_rep)  # element-wise division
+</pre>
+<p class="NormalHeading1">Saving the Processed Data</p>
+<p class="NormalParagraph">Finally, we save the normalized training features and labels using the
+    pickle library. This allows us to easily load them later for machine learning tasks:</p>
+<pre class="NormalCodings">
+with open("trainfeats.pckl", "wb") as f:
+    pickle.dump(trainfeatsnorm, f)
+with open("trainlabel.pckl", "wb") as f:
+    pickle.dump(trainlabel, f)
+</pre>
+<p class="NormalParagraph">This document outlines a structured approach to feature extraction from
+    images using Python. We utilized various image processing techniques, including LBP, GLCM, and
+    Gabor filters, to extract meaningful features. The normalization step ensures that our data is
+    suitable for machine learning algorithms. This process can significantly aid in tasks such as
+    image classification or object detection. By systematically implementing these methods, we
+    prepare our dataset for effective analysis and modeling in future projects.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

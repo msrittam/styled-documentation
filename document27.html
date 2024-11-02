@@ -1,0 +1,281 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Overview of various machine learning algorithms and their implementations</p>
+<p class="NormalParagraph">The following document provides an overview of various machine learning
+    algorithms and their implementations. Each section discusses a specific algorithm, including
+    Linear Regression, Logistic Regression, Support Vector Machines (SVM), K-means Clustering,
+    Support Vector Regression, Word Tokenization, and Convolutional Neural Networks (CNN) for
+    handwriting recognition. The code snippets illustrate the practical application of these
+    concepts.</p>
+<p class="NormalHeading1">Linear Regression</p>
+<p class="NormalParagraph">Linear regression is a statistical method used to model the relationship
+    between a dependent variable and one or more independent variables. This technique helps in
+    predicting outcomes based on input data.</p>
+<pre class="NormalCodings">
+import numpy as np
+import matplotlib.pyplot as plt
+def estimate_coef(x, y):
+    n = np.size(x)
+    m_x = np.mean(x)
+    m_y = np.mean(y)
+    SS_xy = np.sum(y * x) - n * m_y * m_x
+    SS_xx = np.sum(x * x) - n * m_x * m_x
+    b_1 = SS_xy / SS_xx
+    b_0 = m_y - b_1 * m_x
+    return (b_0, b_1)
+def plot_regression_line(x, y, b):
+    plt.scatter(x, y, color="m", marker="o", s=30)
+    y_pred = b[0] + b[1] * x
+    plt.plot(x, y_pred, color="g")
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.show()
+def main():
+    x = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    y = np.array([1, 3, 2, 5, 7, 8, 8, 9, 10, 12])
+    b = estimate_coef(x, y)
+    print("Estimated coefficients:\nb_0 = {}  \nb_1 = {}".format(b[0], b[1]))
+    plot_regression_line(x, y, b)
+if __name__ == "__main__":
+    main()
+</pre>
+<p class="NormalParagraph">In this code, the estimate_coef function calculates the coefficients \(
+    b_0 \) and \( b_1 \), which represent the y-intercept and slope of the regression line,
+    respectively. The function plot_regression_line creates a scatter plot of the actual data points
+    and the fitted regression line. The main function prepares the data, estimates the coefficients,
+    and displays the plot.</p>
+<p class="NormalHeading1">Logistic Regression</p>
+<p class="NormalParagraph">Logistic regression is used for binary classification problems,
+    predicting the probability that a given input belongs to a particular category.</p>
+<pre class="NormalCodings">
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import sklearn
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score
+from matplotlib.colors import ListedColormap
+# Loading Dataset
+dataset = pd.read_csv('User_Data.csv')
+x = dataset.iloc[:, [2, 3]].values
+y = dataset.iloc[:, 4].values
+# Splitting the dataset to train and test
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.25, random_state=0)
+# Perform feature scaling
+sc_x = StandardScaler()
+xtrain = sc_x.fit_transform(xtrain)
+xtest = sc_x.transform(xtest)
+# Train the Logistic Regression Model
+classifier = LogisticRegression(random_state=0)
+classifier.fit(xtrain, ytrain)
+# Predictions
+y_pred = classifier.predict(xtest)
+# Model performance
+cm = confusion_matrix(ytest, y_pred)
+print("Confusion Matrix: \n", cm)
+print("Accuracy: ", accuracy_score(ytest, y_pred))
+# Visualizing the performance
+X_set, y_set = xtest, ytest
+X1, X2 = np.meshgrid(np.arange(start=X_set[:, 0].min() - 1, stop=X_set[:, 0].max() + 1, step=0.01),
+                     np.arange(start=X_set[:, 1].min() - 1, stop=X_set[:, 1].max() + 1, step=0.01))
+plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
+         alpha=0.75, cmap=ListedColormap(('red', 'green')))
+plt.xlim(X1.min(), X1.max())
+plt.ylim(X2.min(), X2.max())
+for i, j in enumerate(np.unique(y_set)):
+    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1], c=ListedColormap(('red', 'green'))(i), label=j)
+plt.title('Classifier (Test set)')
+plt.xlabel('Age')
+plt.ylabel('Estimated Salary')
+plt.legend()
+plt.show()
+</pre>
+<p class="NormalParagraph">This code first loads a dataset and separates it into features and
+    labels. It then splits the data into training and testing sets. After applying feature scaling,
+    it trains a logistic regression model and makes predictions on the test set. The confusion
+    matrix and accuracy are printed to evaluate model performance. Finally, a visualization displays
+    how well the model separates the different classes.</p>
+<p class="NormalHeading1">Support Vector Machines (SVM)</p>
+<p class="NormalParagraph">Support Vector Machines are a powerful classification technique that
+    finds the optimal hyperplane to separate different classes in the feature space.</p>
+<pre class="NormalCodings">
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+import matplotlib.pyplot as plt
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df['target'] = iris.target
+X = df.drop(['target'], axis='columns')
+y = df.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+model = SVC()
+model.fit(X_train, y_train)
+score = model.score(X_test, y_test)
+print("Model Accuracy: ", score)
+</pre>
+<p class="NormalParagraph">In this code, we load the Iris dataset, prepare the feature matrix and
+    labels, and split the data into training and test sets. The SVC model is then trained on the
+    training data, and its accuracy is evaluated on the test set.</p>
+<p class="NormalHeading1">K-Means Clustering</p>
+<p class="NormalParagraph">K-means clustering is an unsupervised learning algorithm used to
+    partition data into distinct groups or clusters based on feature similarity.</p>
+<pre class="NormalCodings">
+import numpy as np
+import pandas as pd
+from copy import deepcopy
+from matplotlib import pyplot as plt
+# Load the dataset
+df = pd.read_csv("Iris.csv")
+df.drop('Id', axis=1, inplace=True)
+df["Species"] = pd.Categorical(df["Species"])
+df["Species"] = df["Species"].cat.codes
+data = df.values[:, 0:4]
+category = df.values[:, 4]
+k = 3
+n = data.shape[0]
+c = data.shape[1]
+mean = np.mean(data, axis=0)
+std = np.std(data, axis=0)
+centers = np.random.randn(k, c) * std + mean
+colors = ['orange', 'blue', 'green']
+for i in range(n):
+    plt.scatter(data[i, 0], data[i, 1], s=7, color=colors[int(category[i])])
+plt.scatter(centers[:, 0], centers[:, 1], marker='*', c='g', s=150)
+centers_old = np.zeros(centers.shape)
+centers_new = deepcopy(centers)
+clusters = np.zeros(n)
+distances = np.zeros((n, k))
+error = np.linalg.norm(centers_new - centers_old)
+while error != 0:
+    for i in range(k):
+        distances[:, i] = np.linalg.norm(data - centers[i], axis=1)
+    clusters = np.argmin(distances, axis=1)
+    centers_old = deepcopy(centers_new)
+    for i in range(k):
+        centers_new[i] = np.mean(data[clusters == i], axis=0)
+    error = np.linalg.norm(centers_new - centers_old)
+for i in range(n):
+    plt.scatter(data[i, 0], data[i, 1], s=7, color=colors[int(category[i])])
+plt.scatter(centers_new[:, 0], centers_new[:, 1], marker='*', c='g', s=150)
+</pre>
+<p class="NormalParagraph">This K-means clustering implementation starts by loading the Iris
+    dataset and encoding the species as numeric values. It then randomly initializes cluster centers
+    and iteratively updates them based on the mean of the points assigned to each cluster. The
+    result is visualized with scatter plots to show how the data points and cluster centers relate.</p>
+<p class="NormalHeading1">Support Vector Regression (SVR)</p>
+<p class="NormalParagraph">Support Vector Regression is a variation of SVM used for regression
+    tasks. It aims to predict a continuous output variable.</p>
+<pre class="NormalCodings">
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVR
+dataset = pd.read_csv('Position_Salaries.csv')
+X = dataset.iloc[:, 1:2].values.astype(float)
+y = dataset.iloc[:, 2:3].values.astype(float)
+sc_X = StandardScaler()
+sc_y = StandardScaler()
+X = sc_X.fit_transform(X)
+y = sc_y.fit_transform(y)
+regressor = SVR(kernel='rbf')
+regressor.fit(X, y)
+y_pred = sc_y.inverse_transform((regressor.predict(sc_X.transform(np.array([[6.5]])))))
+plt.scatter(X, y, color='magenta')
+plt.plot(X, regressor.predict
+(X), color='green')
+plt.title('Truth or Bluff (Support Vector Regression Model)')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+plt.show()
+X_grid = np.arange(min(X), max(X), 0.1)
+X_grid = X_grid.reshape((len(X_grid), 1))
+plt.scatter(X, y, color='red')
+plt.plot(X_grid, regressor.predict(X_grid), color='blue')
+plt.title('Truth or Bluff (Support Vector Regression Model(High Resolution))')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+plt.show()
+</pre>
+<p class="NormalParagraph">In this implementation, the dataset for salary predictions is loaded,
+    and the features and target variable are scaled for better performance. The SVR model is trained
+    on the scaled data, and predictions are made for a specific input level. The results are
+    visualized to show how well the model fits the data.</p>
+<p class="NormalHeading1">Word Tokenization</p>
+<p class="NormalParagraph">Word tokenization is a text preprocessing step that involves splitting
+    text into individual words or tokens.</p>
+<pre class="NormalCodings">
+import pandas as pd
+import nltk
+from nltk import word_tokenize
+corpus = [
+    'Did you hear about the Native American man that drank 200 cups of tea?',
+    "What's the best anti diarrheal prescription?",
+    'What do you call a person who is outside a door and has no arms nor legs?',
+    'Which Star Trek character is a member of the magic circle?',
+    "What's the difference between a bullet and a human?"
+]
+tok_corp = pd.DataFrame([word_tokenize(sent) for sent in corpus])
+print(tok_corp)
+</pre>
+<p class="NormalParagraph">This code uses the NLTK library to tokenize sentences from a given
+    corpus. Each sentence is split into words, making it easier to analyze text data in subsequent
+    tasks.</p>
+<p class="NormalHeading1">Handwritten Digits Classification with CNN</p>
+<p class="NormalParagraph">Convolutional Neural Networks (CNN) are particularly effective for image
+    classification tasks, such as recognizing handwritten digits from the MNIST dataset.</p>
+<pre class="NormalCodings">
+import tensorflow as tf
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
+x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
+input_shape = (28, 28, 1)
+x_train = x_train.astype('float32') / 255
+x_test = x_test.astype('float32') / 255
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
+model = Sequential()
+model.add(Conv2D(28, kernel_size=(3, 3), input_shape=input_shape))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Flatten())
+model.add(Dense(128, activation=tf.nn.relu))
+model.add(Dropout(0.2))
+model.add(Dense(10, activation=tf.nn.softmax))
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.fit(x=x_train, y=y_train, epochs=10)
+model.evaluate(x_test, y_test)
+import matplotlib.pyplot as plt
+image_index = 2853
+plt.imshow(x_test[image_index].reshape(28, 28), cmap='Greys')
+predict = x_test[image_index].reshape(28, 28)
+pred = model.predict(x_test[image_index].reshape(1, 28, 28, 1))
+print(pred.argmax())
+</pre>
+<p class="NormalParagraph">In this example, we load the MNIST dataset and preprocess the images for
+    training. A CNN model is constructed using convolutional, pooling, and dense layers. The model
+    is trained on the training set and evaluated on the test set, with the ability to visualize the
+    predictions on specific test images.</p>
+<p class="NormalParagraph">This document outlines the fundamental concepts and implementations of
+    various machine learning algorithms, from regression techniques to advanced neural networks.
+    Each code snippet serves as a practical demonstration of the theoretical concepts discussed,
+    enabling readers to understand how to apply these techniques to real-world problems. Through
+    this exploration, one can appreciate the power and versatility of machine learning in extracting
+    insights from data.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->

@@ -1,0 +1,121 @@
+<html lang="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,ops,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Dashboard Application</title>
+</head>
+<body>
+<p class="MainHeading">Understanding Web Applications and React</p>
+<p class="NormalParagraph">In the world of web development, applications can be categorized into two primary types:
+    multi-page applications and single-page applications. Each type has its unique
+    characteristics that influence how users interact with them.</p>
+<p class="NormalParagraph">A multi-page application is designed so that every user request
+    leads to the loading of a new HTML document. This means that when you navigate to a different
+    page, the entire content is refreshed. A familiar example of this is the Amazon website, where
+    every click on a different product or category results in a new page being displayed. This
+    architecture is straightforward but can feel slower because the browser must load a complete new
+    page each time.</p>
+<p class="NormalParagraph">In contrast, a single-page application behaves differently.
+    Initially, when a user first accesses the application, the browser retrieves an HTML document.
+    However, for subsequent actions, the application communicates with the server to fetch only the
+    necessary data in the form of JSON (JavaScript Object Notation). This approach allows for a more
+    seamless user experience, as seen in applications like Gmail's compose window and Google Maps.
+    Users can interact with these apps without having to wait for new pages to load completely.</p>
+<p class="NormalHeading1">Web Application Architecture Patterns</p>
+<p class="NormalParagraph">When creating web applications, developers often use specific
+    architectural patterns to ensure efficiency and maintainability. These patterns help organize
+    the application’s structure and facilitate communication between components. Some commonly used
+    patterns include:</p>
+<p class="NormalParagraph">The layered pattern, which organizes an application into distinct
+    layers, each responsible for a specific aspect of functionality. The client-server pattern
+    separates the user interface (client) from the data processing (server), allowing each to
+    function independently. The master-slave pattern involves a master node that controls one or
+    more slave nodes, typically for managing databases or resources.</p>
+<p class="NormalParagraph">Additionally, there are the pipe-filter pattern, which processes
+    data in stages, allowing for modular development; the broker pattern, which acts as a
+    mediator between different components; the peer-to-peer pattern, where each participant can
+    act both as a client and a server; and the event bus pattern, which enables various parts of
+    the application to communicate through events.</p>
+<p class="NormalParagraph">Further patterns include the Model-View-Controller (MVC), which
+    separates the application's data (model), user interface (view), and the logic that connects
+    them (controller); the blackboard pattern, which facilitates collaboration among multiple
+    components on a shared workspace; and the interpreter pattern, which processes a specific
+    language or input based on defined grammar.</p>
+<p class="NormalHeading1">Key Concepts in React</p>
+<p class="NormalParagraph">React is a popular library used for building user interfaces. It
+    includes several fundamental concepts that developers should understand, such as JSX,
+    virtual DOM, components, states, props, and event handling. To set up a new
+    React project, one can run the following commands in the terminal:</p>
+<p class="NormalParagraph">npm create vite@latest projectname -- --template react<br/>npm run dev</p>
+<p class="NormalParagraph">JSX, which stands for JavaScript XML, is an essential feature of React.
+    It allows developers to write HTML-like syntax directly within JavaScript. This extension is
+    type-safe, meaning it helps catch errors during the development process. JSX can return only one
+    component, which can be wrapped in a React.Fragment or using shorthand syntax <>.
+    Importantly, this does not create an extra element in the final HTML structure. When not using
+    JSX, we can create elements using React.createElement like so:</p>
+<pre class="NormalCodings">React.createElement("div", { style: { backgroundColor: "orange" } }, "hello world");</pre>
+<p class="NormalParagraph">Within JSX, we can have regular elements, nested elements, specify
+    attributes, and embed JavaScript expressions, making it a powerful tool for developers.</p>
+<p class="NormalHeading1">Virtual DOM and Performance</p>
+<p class="NormalParagraph">Working directly with the DOM can be inefficient. For instance, if we
+    want to manipulate elements on a webpage, we might write code like this:</p>
+<pre class="NormalCodings">
+document.getElementById("message").children;
+document.getElementById("message").innerText = "hello world";</pre>
+<p class="NormalParagraph">This method can be slow because it requires the browser to re-render the
+    entire DOM tree. To improve this process, React employs the virtual DOM. The virtual DOM is a
+    lightweight representation of the actual DOM. It understands what needs to be displayed in the
+    browser based on the JSX code written by the developer. When changes occur, the virtual DOM
+    communicates with the real DOM to update only the parts that need to change, significantly
+    enhancing performance.</p>
+<p class="NormalParagraph">The virtual DOM is particularly useful for managing frequent updates in
+    components. React uses a sophisticated algorithm known as React Fiber, which determines the most
+    efficient way to update the user interface, minimizing the performance overhead.</p>
+<p class="NormalHeading1">Understanding JavaScript and ECMAScript</p>
+<p class="NormalParagraph">JavaScript, the programming language at the core of web development,
+    follows standards set by ECMAScript. This standard provides guidelines and specifications to
+    ensure consistent behavior across different JavaScript environments. Understanding these
+    standards is essential for developers to write effective code.</p>
+<p class="NormalParagraph">One of the key aspects of JavaScript is variable declaration. The
+    keyword var does not limit the scope of a variable within loops or conditions, meaning it can
+    be accessed from outside those structures. On the other hand, let provides block scope,
+    allowing a variable to be accessible only within the block it was defined. This can be
+    particularly useful in loops. The const keyword is used to declare constants—variables that
+    are assigned a value at the start and cannot be changed later.</p>
+<p class="NormalParagraph">In the recent updates with ES6, new features were introduced, such as
+    the spread operator, which allows for object manipulation. For example, the following code
+    demonstrates how to create a new style object by combining existing styles with a new background
+    color:</p>
+<pre class="NormalCodings">const style = { ...(spread operator used for copying things) CommonStyles, backgroundColor: "limegreen" };</pre>
+<p class="NormalParagraph">ES6 also introduced template literals, which enable multi-line strings
+    and variable substitution using backticks, eliminating the need for cumbersome concatenation.</p>
+<p class="NormalHeading1">Components in React</p>
+<p class="NormalParagraph">React allows developers to create components, which are reusable pieces
+    of the user interface. A class-based component is defined as follows:</p>
+<pre class="NormalCodings">
+export default class ClassDemo extends React.Component {
+render() { return &lt;html document>; } }
+</pre>
+<p class="NormalParagraph">Class-based components can utilize lifecycle methods, such as
+    componentDidMount, componentWillUnmount, setState, and the constructor. The this keyword
+    in these methods refers to the component instance, enabling access to properties and methods
+    within that component.</p>
+<p class="NormalParagraph">However, with the introduction of hooks, developers can achieve similar
+    functionality in functional components, which are generally simpler and easier to work with.
+    This simplicity is why many developers prefer functional components over class-based ones. Hooks
+    enable state management and side effects in functional components, making them versatile and
+    efficient.</p>
+<p class="NormalParagraph">In summary, understanding the different types of web applications,
+    architectural patterns, and the fundamentals of React is essential for aspiring developers. With
+    tools like JSX, the virtual DOM, and modern JavaScript features, creating interactive and
+    efficient user interfaces becomes more manageable. By grasping these concepts, young learners
+    can embark on their journey into the world of web development with confidence and creativity.</p>
+</body>
+</html>
+<!--special character reference: https://stackoverflow.com/questions/37789148/how-to-display-html-code-in-a-html-page-in-a-formatted-manner-->
+<!--given glossy effect from: https://freefrontend.com/css-glassmorphism/-->
+<!--glossy effect reference: https://codepen.io/kanishkkunal/pen/QWGzBwz-->
+<!--glossy effect reference: https://codepen.io/gutugaluppo/pen/MWjjWPx-->
+<!--reference for rotating division: https://www.w3schools.com/cssref/css3_pr_transform.php-->
